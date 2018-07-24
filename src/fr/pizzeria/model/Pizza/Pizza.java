@@ -5,7 +5,7 @@ public class Pizza {
 	public String code;
 	public String libelle;
 	public double prix;
-	
+	public static int currentLastId =0;
 	
 	public Pizza(String code, String libelle, double prix) {
 		this.code = code;
@@ -23,7 +23,7 @@ public class Pizza {
 	}
 	
 	public void nombrePizza(){
-		this.id = id++;
+		this.currentLastId = currentLastId++;
 	}
 	
 }
