@@ -1,75 +1,76 @@
 package fr.pizza.Dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import fr.pizzeria.model.Pizza.Pizza;
 
 public class PizzaArrayDao implements IPizzaDao {
-
-	private Pizza [] pizzas =  {
-		new Pizza("PEP","Pépéroni",12.50),
-		new Pizza("MAR","Margherita",14.00),
-		new Pizza("REIN","La Reine",11.50),
-		new Pizza("FRO","La 4 fromages",12.00),
-		new Pizza("CAN","La cannibale",12.50)
-	};
+	
+	private List <Pizza> pizzas = new ArrayList<Pizza>();
+	
 	@Override
-	public Pizza[] findAllPizzas() {
+	public List<Pizza> findAllPizzas() {
 		return pizzas;
 	}
 
 	@Override
 	public void saveNewPizza(Pizza pizza) {
 
-		Pizza pTemp [] = new Pizza[pizzas.length+1];
+		pizzas.add(new Pizza(pizza.getCode(), pizza.getLibelle() , pizza.getPrix()));
 
-		for(int i=0;i<pizzas.length;i++){
-			pTemp[i] = pizzas[i] ;
-		}
-		pTemp[pizzas.length] = new Pizza(pizza.getCode(), pizza.getLibelle() , pizza.getPrix());
-		pizzas = pTemp;
 	}
 
 	@Override
 	public void updatePizza(String codePizza, Pizza pizza) {
-		for(int i =0; i< pizzas.length;i++){
+		for(int i =0; i< pizzas.size();i++){
 
-			if(pizzas[i].getCode().equals(codePizza)){
-				pizzas[i] = new Pizza(pizza.getCode(), pizza.getLibelle(), pizza.getPrix());
+			if(pizzas.get(i).getCode().equals(codePizza)){
+				pizzas.get(i).setCode(pizza.getCode());
+				pizzas.get(i).setLibelle(pizza.getLibelle()); 
+				pizzas.get(i).setPrix(pizza.getPrix()); 
 			}
 		}
 	}
 
 	@Override
 	public void deletePizza(String codePizza) {
-		Pizza pTemp [] = new Pizza[pizzas.length-1];
-		int j =0;
-		for(int i =0; i< pizzas.length;i++){
-
-			if(!pizzas[i].getCode().equals(codePizza)){	
-				pTemp[j] = pizzas[i] ;
-				j++;
-			}
+		for(int i=0;i<pizzas.size();i++){
+			if(pizzas.get(i).getCode().equals(codePizza)){
+				pizzas.remove(i).toString();
+			}		
 		}
-		pizzas = pTemp;
+		
 	}
 
 	@Override
 	public Pizza findPizzaByCode(String codePizza) {
-		for(int i=0;i<pizzas.length;i++){
-			if(pizzas[i].getCode().equals(codePizza)){
-				return pizzas[i];
+		for(int i=0;i<pizzas.size();i++){
+			if(pizzas.get(i).getCode().equals(codePizza)){
+				return pizzas.get(i);
 			}		
 		}
+		
 		return null;
 	}
 
 	@Override
 	public boolean pizzaExists(String codePizza) {
-		for(int i=0;i<pizzas.length;i++){
-			if(pizzas[i].getCode().equals(codePizza)){
+		for(int i=0;i<pizzas.size();i++){
+			if(pizzas.get(i).getCode().equals(codePizza)){
 				return true;
 			}		
 		}
 		return false;
+	}
+
+	@Override
+	public void createIntoTables() {
+		pizzas.add(new Pizza("PEP","Pépéroni",12.50));
+		pizzas.add(new Pizza("MAR","Margherita",14.00));
+		pizzas.add(new Pizza("REIN","La Reine",11.50));
+
+		
 	}
 
 }

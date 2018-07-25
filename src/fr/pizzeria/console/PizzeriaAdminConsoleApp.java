@@ -1,10 +1,12 @@
 package fr.pizzeria.console;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import fr.pizza.Dao.PizzaArrayDao;
 import fr.pizza.services.MenuService;
 import fr.pizza.services.MenuServiceFactory;
+import fr.pizzeria.model.Pizza.Pizza;
 
 
 public class PizzeriaAdminConsoleApp {
@@ -21,7 +23,7 @@ public class PizzeriaAdminConsoleApp {
 		MenuServiceFactory menu = new MenuServiceFactory();
 
 		boolean check = true;
-		
+		IDao.createIntoTables();
 		while(check){
 			
 			System.out.println("***** Pizzeria Administration *****");
